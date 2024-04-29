@@ -4,7 +4,7 @@
 
 <h2>HTML Forms</h2>
 
-<form action="{{'route(receiveForm1')}}" method="POST">
+<form action="form1" method="POST">
 @csrf
   <label for="fname">First name:</label><br>
   <input type="text" id="fname" name="fname" value="John"><br>
