@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
-use App\Http\Controllers\clientController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\StudentController;
 
 
 
@@ -58,6 +59,9 @@ Route::prefix('cars')->group(function(){
     //return 'The required is not found';
    // return redirect('/');
 //});
-Route::post('form1',[MyController::class,'getData']);
-Route::view('form1','form1');
-Route::get('insertClient',[clientController::class,'store']);
+
+//Route::post('form1',[MyController::class,'getData']);
+//Route::view('form1','form1');
+//Route::get('insertClient',[clientController::class,'store']);
+Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
+Route::get('addStudent',[StudentController::class,'create']);

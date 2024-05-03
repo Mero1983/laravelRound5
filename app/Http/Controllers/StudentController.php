@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
-use App\Models\Client;
 
-class ClientController
+
+class StudentController
 {
     /**
      * Display a listing of the resource.
@@ -20,21 +21,22 @@ class ClientController
      */
     public function create()
     {
-        //
+      return view('addStudent');  //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store()
+    public function store(Request $request)
     {
-       $client = new Client();
-       $client->ClientName = 'Egypt Air';
-       $client->phone = '01099041481';
-       $client->email = 'EgyptAir@gmail.com';
-       $client->website = 'https://EgyptAir.com';
-       $client-> save();
-       return 'Inserted Successfully';//
+        $student=new Student();
+      $student->StudentName = $request->StudentName;
+      $student->age= $request->age;
+      $student->save();
+   
+     
+      return 'Inserted Successfully';
+        //
     }
 
     /**
