@@ -11,9 +11,11 @@ class StudentController
     /**
      * Display a listing of the resource.
      */
+    private $columns=['StudentName','age'];
     public function index()
     {
-        //
+        $student=Student::get();
+      return view ('Students',compact('student')) ;
     }
 
     /**
@@ -29,13 +31,14 @@ class StudentController
      */
     public function store(Request $request)
     {
-        $student=new Student();
-      $student->StudentName = $request->StudentName;
-      $student->age= $request->age;
-      $student->save();
-   
+      //  $student=new Student();
+      //$student->StudentName = $request->StudentName;
+      //$student->age= $request->age;
+      //$student->save();
+     Student::create($request->only($this->columns));
+      return redirect('Students');//
      
-      return 'Inserted Successfully';
+     // return 'Inserted Successfully';
         //
     }
 

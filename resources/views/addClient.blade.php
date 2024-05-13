@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,17 +9,21 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-@include('include.nav2')
+  <!-- start nav bar  -->
+@include('include.nav')
 
-<h2>Insert Student</h2>
+<h2>Insert Client</h2>
 
-<form action="{{ route('insertStudent') }}" method="POST">
+<form action="{{ route('insertClient') }}" method="POST">
   @csrf
-  <label for="StudentName">Student name:</label><br>
-  <input type="text" id="StudentName" name="StudentName" ><br>
-  <label for="age">age:</label><br>
-  <input type="text" id="age" name="age"><br><br>
-
+  <label for="">Client name:</label><br>
+  <input type="text" id="clientName" name="clientName" ><br>
+  <label for="phone">Phone:</label><br>
+  <input type="text" id="phone" name="phone"><br><br>
+  <label for="email">email:</label><br>
+  <input type="email" id="email" name="email" ><br><br>
+  <label for="website">website:</label><br>
+  <input type="text" id="website" name="website"><br><br>
   <input type="submit" value="Submit">
 </form> 
 

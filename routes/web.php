@@ -64,4 +64,9 @@ Route::prefix('cars')->group(function(){
 //Route::view('form1','form1');
 //Route::get('insertClient',[clientController::class,'store']);
 Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
-Route::get('addStudent',[StudentController::class,'create']);
+Route::get('addStudent',[StudentController::class,'create'])->name('addStudent');
+Route::get('Students',[StudentController::class,'index'])->name('Students');
+
+Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
+Route::get('addClient',[ClientController::class,'create'])->name('addClient');
+Route::get('Clients',[ClientController::class,'index'])->name('Clients');
