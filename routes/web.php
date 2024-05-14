@@ -66,7 +66,15 @@ Route::prefix('cars')->group(function(){
 Route::post('insertStudent',[StudentController::class,'store'])->name('insertStudent');
 Route::get('addStudent',[StudentController::class,'create'])->name('addStudent');
 Route::get('Students',[StudentController::class,'index'])->name('Students');
+Route::get('editStudent/{id}',[StudentController::class,'edit'])->name('editStudent');
+Route::put('updateStudent/{id}',[StudentController::class,'update'])->name('updateStudent');
+Route::get('showStudent/{id}',[StudentController::class,'show'])->name('showStudent');
+Route::delete('delStudent',[StudentController::class,'destroy'])->name('delStudent');
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
 Route::get('Clients',[ClientController::class,'index'])->name('Clients');
+Route::get('editClient/{id}',[ClientController::class,'edit'])->name('editClient');
+Route::put('updateClient/{id}',[ClientController::class,'update'])->name('updateClient');
+Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
+Route::delete('delClient',[ClientController::class,'destroy'])->name('delClient');

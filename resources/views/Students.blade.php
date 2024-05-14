@@ -17,15 +17,27 @@
       <tr>
         <th>Student name</th>
         <th>Age</th>
-    
+        <th>Edit</th>
+        <th>Show</th>
+        <th>delete</th>
+
       </tr>
     </thead>
     <tbody>
 @foreach ($student as $student)
       <tr>
-        <td>{{$student->StudentName}}</td>
-        <td>{{$student->age}}</td>
-        
+      <td>{{ $student->StudentName }}</td>
+        <td>{{ $student->age }}</td>
+        <td><a href="{{ route('editStudent', $student->id) }}">Edit</a></td>
+        <td><a href="{{ route('showStudent', $student->id) }}">Show</a></td>
+              
+<td>
+  <form action="{{route ('delStudent')}}" method="POST">
+@csrf
+@method('DELETE')
+            <input type="hidden" value="{{$student->id}}" name="id">
+            <input type="submit" value="Delete">
+          </form></td>
       </tr>
       @endforeach
     </tbody>

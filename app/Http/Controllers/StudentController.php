@@ -47,15 +47,16 @@ class StudentController
      */
     public function show(string $id)
     {
-        //
-    }
+        $student = Student::findOrFail($id);
+    return view('showStudent',compact('student'));    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $student = Student::findOrFail($id);
+        return view('editStudent',compact('student'));
     }
 
     /**
@@ -63,14 +64,17 @@ class StudentController
      */
     public function update(Request $request, string $id)
     {
-        //
+        Student::where ('id',$id)->update($request->only($this->columns));
+        return redirect('Students');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+       Student::where ('id',$id)->delete();
+        return redirect('Students');
     }
 }

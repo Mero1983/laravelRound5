@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,21 +9,19 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <!-- start nav bar  -->
-@include('include.nav')
+@include('include.nav2')
 
-<h2>Insert Client</h2>
-
-<form action="{{ route('insertClient') }}" method="POST">
+<h2>Edit Student</h2>
+<form action="{{ route('updateStudent',$student->id) }}" method="POST">
   @csrf
-  <label for="">Client name:</label><br>
-  <input type="text" id="ClientName" name="ClientName" ><br>
-  <label for="phone">Phone:</label><br>
-  <input type="text" id="phone" name="phone"><br><br>
-  <label for="email">email:</label><br>
-  <input type="email" id="email" name="email" ><br><br>
-  <label for="website">website:</label><br>
-  <input type="text" id="website" name="website"><br><br>
+  @method('put')
+
+
+  <label for="StudentName">Student name:</label><br>
+  <input type="text" id="StudentName" name="StudentName" class="form-control" value= "{{$student->StudentName}}"><br><br>
+  <label for="age">age:</label><br>
+  <input type="text" id="age" name="age" class="form-control" value= "{{$student->age}}"><br><br>
+
   <input type="submit" value="Submit">
 </form> 
 
