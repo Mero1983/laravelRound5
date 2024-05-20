@@ -12,14 +12,24 @@
 @include('include.nav2')
 
 <h2>Edit Student</h2>
-<form action="{{ route('updateStudent',$student->id) }}" method="POST">
+<form action="{{route('updateStudent',$student->id) }}" method="POST">
   @csrf
-  @method('put')
+  @method('PUT')
 
 
   <label for="StudentName">Student name:</label><br>
+  <p style ="color: red">
+  @error('StudentName')
+  {{$message}}
+  @enderror
+  </p>
   <input type="text" id="StudentName" name="StudentName" class="form-control" value= "{{$student->StudentName}}"><br><br>
   <label for="age">age:</label><br>
+  <p style ="color: red">
+  @error('age')
+  {{$message}}
+  @enderror
+  </p>
   <input type="text" id="age" name="age" class="form-control" value= "{{$student->age}}"><br><br>
 
   <input type="submit" value="Submit">

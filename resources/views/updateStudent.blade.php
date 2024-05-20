@@ -11,23 +11,17 @@
 <body>
 @include('include.nav2')
 
-<h2>Insert Student</h2>
-
-<form action="{{ route('insertStudent') }}" method="POST">
+<h2>Update Student</h2>
+<form action="{{ route('updateStudent',$student->id) }}" method="POST">
   @csrf
+  @method('PUT')
+
+
   <label for="StudentName">Student name:</label><br>
-  <p style ="color: red">
-  @error('StudentName')
-  {{$message}}
-  @enderror
-  </p>
-  <input type="text" id="StudentName" name="StudentName" ><br>
+  <input type="text" id="StudentName" name="StudentName" class="form-control" value= "{{$student->StudentName}}"><br><br>
   <label for="age">age:</label><br>
-  <p style ="color: red">
-  @error('age')
-  {{$message}}
-  @enderror
-  <input type="text" id="age" name="age"><br><br>
+  <input type="text" id="age" name="age" class="form-control" value= "{{$student->age}}"><br><br>
+
   <input type="submit" value="Submit">
 </form> 
 

@@ -31,13 +31,23 @@ class ClientController
      */
     public function store(Request $request)
     {
-       $client = new Client();
-       $client->ClientName = 'Egypt Air';
-       $client->phone = '01099041481';
-       $client->email = 'EgyptAir@gmail.com';
-       $client->website = 'https://EgyptAir.com';
-       $client-> save();
-       Client::create($request->only($this->columns));
+      
+      $data = $request->validate([
+        'ClientName'=>'required|max:100|min:5',
+        'phone'=>'required|min:11',
+        'email'=>'required|email:rfc',
+        'website'=>'required',
+
+      ] );
+      
+      //  $client = new Client();
+      //  $client->ClientName = 'Egypt Air';
+      //  $client->phone = '01099041481';
+      //  $client->email = 'EgyptAir@gmail.com';
+      //  $client->website = 'https://EgyptAir.com';
+      //  $client-> save();
+      // Client::create($request->only($this->columns));
+      Client::create($data);
        return redirect('Clients');//
     }
 
@@ -70,13 +80,31 @@ class ClientController
       return redirect('Clients');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
+    public function trash ()
+    {
+      $trashed =  Client::onlyTrashed()->get();
+  
+      return view('trashClient',compact('trashed'));
+    }
+// restore
+    public function restore (string $id)
+    {
+      Client:: where ('id',$id)->restore();
+      return redirect('Clients');
+    }
+    
     public function destroy(Request $request)
     {
      $id = $request->id;
      Client::where ('id',$id)->delete();
      return redirect('Clients');
         }
+//forcedelete
+        public function forceDelete(Request $request)
+        {
+         $id = $request->id;
+         Client::where ('id',$id)->forceDelete();
+         return redirect('trashClient');
+            }
 }
