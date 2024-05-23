@@ -17,8 +17,9 @@
       <tr>
         <th>Student name</th>
         <th>Age</th>
+        <th>City</th>
+        <th>Image</th>
         <th>Edit</th>
-        <th>Update</th>
         <th>Show</th>
         <th>delete</th>
 
@@ -29,8 +30,9 @@
       <tr>
       <td>{{ $student->StudentName }}</td>
         <td>{{ $student->age }}</td>
+        <td>{{ $student->city }}</td>
+        <td>{{ $student->image }}</td>
         <td><a href="{{ route('editStudent', $student->id) }}">Edit</a></td>
-        <td><a href="{{ route('updateStudent', $student->id) }}">Update</a></td>
         <td><a href="{{ route('showStudent', $student->id) }}">Show</a></td>
               
 <td>

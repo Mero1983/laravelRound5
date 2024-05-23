@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use PhpOption\Option;
+
+use function Laravel\Prompts\select;
 
 class ClientController
 {
@@ -31,15 +34,34 @@ class ClientController
      */
     public function store(Request $request)
     {
-      
+     
+      $messages=$this->errMsg();
       $data = $request->validate([
         'ClientName'=>'required|max:100|min:5',
         'phone'=>'required|min:11',
         'email'=>'required|email:rfc',
         'website'=>'required',
+        'city'=>'required|max:30' ,'image'=>'required',] ,$messages);
+        $imgExt = $request->image->getClientOriginalExtension();
+        $fileName = time() .'.' . $imgExt;
+        $path='assets/images';
+        $request->image->move($path,$fileName);
+        $data['image']=$fileName;
+      $data['active']=isset($request->active);
+      Client::create($data);
+      return redirect('Clients');
+  }
 
-      ] );
-      
+  public function errMsg(){
+    return[
+      'ClientName.required'=>'The client name is missed,please insert' ,
+      'ClientName.min'=> 'length less than 5 , please insert more chars',
+
+
+  ];
+  
+} 
+   
       //  $client = new Client();
       //  $client->ClientName = 'Egypt Air';
       //  $client->phone = '01099041481';
@@ -47,10 +69,7 @@ class ClientController
       //  $client->website = 'https://EgyptAir.com';
       //  $client-> save();
       // Client::create($request->only($this->columns));
-      Client::create($data);
-       return redirect('Clients');//
-    }
-
+     
     /**
      * Display the specified resource.
      */
@@ -66,17 +85,41 @@ class ClientController
     public function edit(string $id)
 
     {
-      $client = Client::findOrFail($id);
-    return view('editClient',compact('client'));
+     
+      $client = Client::findOrFail ($id);
+      
+    // $options = Client::pulck('city','id');
+    // $selectedOption=old('city', $client->city);
+
+  $option= old('city', '$cleint->city');
+
+    return view('city', compact($option));
        // return view("editClient"); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-      Client::where ('id',$id)->update($request->only($this->columns));
+      $messages=$this->errMsg();
+      $data = $request->validate([
+          'clientName' => 'required|max:100|min:5',
+          'phone' => 'required|min:11',
+          'email' => 'required|email:rfc',
+          'website' => 'required',
+          'city' => 'required|max:30',
+          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',], $messages);
+          $client = Client::findOrFail($id);
+          if ($request->hasFile('image')) {
+
+      $imgExt = $request->image->getClientOriginalExtension();
+      $fileName = time() . '.' . $imgExt;
+      $path = 'assets/images';
+      $request->image->move($path, $fileName);
+      $data['image'] = $fileName;}
+      else{
+        $data['image']=$client->image;
+      }
+      $data['active'] = isset($request->active);
+      Client::where ('id',$id)->update($request->$data);
       return redirect('Clients');
     }
 
@@ -107,4 +150,5 @@ class ClientController
          Client::where ('id',$id)->forceDelete();
          return redirect('trashClient');
             }
+            
 }

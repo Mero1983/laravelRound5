@@ -10,5 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Student extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $fillable=['StudentName','age'];
+    protected $fillable=['StudentName','age','city','image','active'];
+  
+    public function getActiveStatus()
+    {
+        return $this->active ? 'Yes':'No' ;
+    }
 }

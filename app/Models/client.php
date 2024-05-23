@@ -11,5 +11,10 @@ class Client extends Model
     use HasFactory,SoftDeletes;
     protected $fillable=[
         
-        'ClientName','phone','email','website'];
+        'ClientName','phone','email','website','city','active','image'];
+        public function getActiveStatus()
+        {
+            return $this->active ? 'Yes':'No' ;
+        }
 }
+

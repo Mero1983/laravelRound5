@@ -7,12 +7,12 @@ use Illuminate\Contracts\Support\ValidatedData;
 use Illuminate\Http\Request;
 
 
+
 class StudentController
 {
     /**
      * Display a listing of the resource.
      */
-    private $columns=['StudentName','age'];
     public function index()
     {
         $students =Student::get();
@@ -32,22 +32,24 @@ class StudentController
      */
     public function store(Request $request)
     {
-      //  $student=new Student();
-      //$student->StudentName = $request->StudentName;
-      //$student->age= $request->age;
-      //$student->save();
-     //Student::create($request->only($this->columns));
-     
+    
+     $messages =$this->errmsg();
      $data = $request->validate([
        'StudentName'=>'required|max:100|min:5',
-       'age'=>'required|max:2',
+       'age'=>'required|max:100',
+       'city'=>'required|max:30',
+       'image'=>'required',
+       'active'=>'required|max:2,',$messages] );
 
-      ] );
+      $imgExt = $request->image->getStudentOriginalExtention(); 
+      $fileName = time() .'.'. $imgExt;
+      $path='assets/images';
+      $request->image->move($path,$fileName);
+      $data['image']=$fileName;
+      $data['active']= isset($request->active);
      Student::create($data);
-      return redirect('Students');//
-     
-     // return 'Inserted Successfully';
-        //
+      return redirect('Students');
+  
     }
 
     public function show(string $id)
@@ -65,21 +67,26 @@ class StudentController
         return view('editStudent',compact('student'));
     }
 
-    public function update(Request $request,student $student)
+    public function update(Request $request,string $id)
     {
-        // Define validation rules
-        $rules = [
-            'name' => 'required|string|max:50',
-            'age' => 'required|integer|max:2',
-        ];
+     // $messages =$this->errmsg();
+    //   //$imgExt = $request->image->getClientOriginalExtention();
+    //   //$fileName = time() .'.'.$imgExt;
+    //   $path='assets'.'images';
+    //  // $request->image->move($path,$fileName);
+    //  // $data['image']=$fileName;
 
-        // Validate the request
-        $validatedData = $request->validate($rules);
-
-        // Update the user with validated data
-    $student->update($validatedData);
-
-        // Redirect with a success message
+     $data = $request->validate([
+        
+            'StudentName'=>'required|max:100|min:5',
+            'age'=>'required|max:100',
+            'city'=>'required|max:30',
+            'image'=>'required',
+            'active'=>'required|max:2,'
+     
+           ] );
+      
+        Student ::where('id',$id)->update ($data);
         return redirect('Students')->with('success', 'User updated successfully!');
     }
 
@@ -96,43 +103,6 @@ class StudentController
       return redirect('Students');
     }
 
-
-   
-
-
-
-//     public function update(request $request,student $student)
-//     { 
-//         $validatedData=$request->validate([
-//             'StudentName'=>'required|string|max:50',
-//             'age'=>'required|integer|max:2'. $student->id,
-//         ]);
-    
-//         $student->update($validatedData);
-//         return redirect('Students')->route('studentupdate')->with('success', 'User updated successfully!');
-       
-
-
-// }
-    
-   
-// public function update(Request $request, string $id)
-
-//     {
-//      $student= Student::findOrFail($id);
-
-
-//     $validator = Student::make($request->all(
-//      [
-//     'StudentName'=>'required|max:100|min:5',
-//     'age'=>'required|min:11'.$id,
-//     ]));
-//     return view('editStudent');
-
-     
-    
-//     }
-
     public function destroy(Request $request)
     {
         $id = $request->id;
@@ -146,4 +116,14 @@ class StudentController
      return redirect('trashStudent');
     }
 
+
+    public function errMsg(){
+      return[
+        'StudentName.required'=>'The student name is missed,please insert' ,
+        'StudentName.min'=> 'length less than 5 , please insert more chars',
+  
+  
+    ];
+    
+}
 }
