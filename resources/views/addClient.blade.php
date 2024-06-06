@@ -59,6 +59,14 @@
       <option value="Alex"{{ old('City') == 'Alex' ? 'selected' : '' }}>Alex
     </select>
     <br><br>
+    <label for="address" >address:</label><br>
+  <p style="color: red">
+      @error('address')
+        {{ $message }}
+      @enderror
+    </p>
+  <input type="text" id="address" name="address"><br><br>
+  </p>
     <label for="image">Image:</label><br>
     <input type="file" id="image" name="image" class="form-control"><br><br>
 

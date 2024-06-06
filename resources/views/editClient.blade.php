@@ -53,6 +53,9 @@
     @endforeach -->
     </select>
     <br><br>
+    <label for="address">address:</label><br>
+  <input type="text" id="address" name="address" class="form-control" value="{{$client->address}}"><br><br>
+
     <label for="active">Active:</label><br>
     <input type="checkbox" id="active" name="active" class="form-control" {{ old('active') ? 'checked' : '' }}><br><br>
 

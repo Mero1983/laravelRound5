@@ -10,6 +10,8 @@
       <li><a href="{{route('Clients')}}">Clients</a></li>
       </li>
       <li><a href="{{route('trashClient')}}">Trash</a></li>
+      @yield('menu')
+      @stack('submenu')
     </ul>
   </div>
 </nav>

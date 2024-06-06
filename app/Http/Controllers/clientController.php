@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
-use PhpOption\Option;
+use App\Traits\uploadfile;
 
 use function Laravel\Prompts\select;
 
 class ClientController
 {
-  
+  use uploadfile;
   private $columns=['ClientName','phone','email','website'];
     /**
      * Display a listing of the resource.
@@ -42,10 +42,11 @@ class ClientController
         'email'=>'required|email:rfc',
         'website'=>'required',
         'city'=>'required|max:30' ,'image'=>'required',] ,$messages);
-        $imgExt = $request->image->getClientOriginalExtension();
-        $fileName = time() .'.' . $imgExt;
-        $path='assets/images';
-        $request->image->move($path,$fileName);
+        $fileName = $this->upload($request->image,'assets/images');
+        // $imgExt = $request->image->getClientOriginalExtension();
+        // $fileName = time() .'.' . $imgExt;
+        // $path='assets/images';
+        // $request->image->move($path,$fileName);
         $data['image']=$fileName;
       $data['active']=isset($request->active);
       Client::create($data);
@@ -99,30 +100,29 @@ class ClientController
 
     public function update(Request $request, string $id)
     {
-      $messages=$this->errMsg();
-      $data = $request->validate([
-          'clientName' => 'required|max:100|min:5',
-          'phone' => 'required|min:11',
-          'email' => 'required|email:rfc',
-          'website' => 'required',
-          'city' => 'required|max:30',
-          'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',], $messages);
-          $client = Client::findOrFail($id);
+      // $messages=$this->errMsg();
+      // $data = $request->validate([
+      //     'clientName' => 'required|max:100|min:5',
+      //     'phone' => 'required|min:11',
+      //     'email' => 'required|email:rfc',
+      //     'website' => 'required',
+      //     'city' => 'required|max:30',
+      //     'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',], $messages);
+      //     $client = Client::findOrFail($id);
           if ($request->hasFile('image')) {
 
-      $imgExt = $request->image->getClientOriginalExtension();
-      $fileName = time() . '.' . $imgExt;
-      $path = 'assets/images';
-      $request->image->move($path, $fileName);
-      $data['image'] = $fileName;}
-      else{
-        $data['image']=$client->image;
-      }
+//      $fileName = time() . '.' . $imgExt;
+      // $path = 'assets/images';
+      // $request->image->move($path, $fileName);
+      // $data['image'] = $fileName;}
+      // else{
+      //   $data['image']=$client->image;
+      // }
       $data['active'] = isset($request->active);
       Client::where ('id',$id)->update($request->$data);
       return redirect('Clients');
     }
-
+  }
     
     public function trash ()
     {

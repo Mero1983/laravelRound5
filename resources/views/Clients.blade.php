@@ -19,6 +19,10 @@
         <th>Phone</th>
         <th>Email</th>
         <th>Website</th>
+        <th>city</th>
+        <th>address</th>
+        <th>image</th>
+        <th>Active</th>
         <th>Edit</th>
         <th>Show</th>
         <th>Delete</th>
@@ -33,6 +37,7 @@
         <td>{{$client->email}}</td>
         <td>{{$client->website}}</td>
         <td>{{$client->city}}</td>
+        <td>{{$client->address}}</td>
         <td>{{$client->image}}</td>
         <td>{{ $client->active? 'Yes' :'No'}}</td>
 

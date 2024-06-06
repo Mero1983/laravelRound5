@@ -59,6 +59,9 @@ Route::prefix('cars')->group(function(){
     //return 'The required is not found';
    // return redirect('/');
 //});
+Route::get('/', function () {
+    return view('stacked');
+});
 
 //Route::post('form1',[MyController::class,'getData']);
 //Route::view('form1','form1');
@@ -73,6 +76,7 @@ Route::get('restoreStudent/{id}',[StudentController::class,'restore'])->name('re
 Route::delete('forceDeleteStudent',[StudentController::class,'forceDeleteStudent'])->name('forceDeleteStudent');
 Route::get('editStudent/{id}',[StudentController::class,'edit'])->name('editStudent');
 Route::put('updateStudent/{id}', [StudentController::class, 'update'])->name('updateStudent');
+
 
 
 
