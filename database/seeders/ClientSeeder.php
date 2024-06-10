@@ -12,6 +12,6 @@ use HasFactory;
     public function run()
     {
         // Seed a set of clients using factory
-        Client::factory()->count(50)->create();
+        Client::factory(20)->create();
     }
-}
+} 

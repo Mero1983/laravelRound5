@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->string('address',100); 
+        Schema::create('cities', function (Blueprint $table) {
+            $table->id();
+            $table->string('city',30);
+            $table->timestamps();
 
         });
     }
@@ -22,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('clients', function (Blueprint $table) {
-            $table->dropcolumn('address'); 
-
-        });
+        Schema::dropcolumn('cities');
     }
 };

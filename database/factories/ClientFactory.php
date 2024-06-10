@@ -14,15 +14,14 @@ use App\Models\Client;
     public function definition()
     {
         return [
-            'ClientName' => $this->faker->name,
-            'phone' => $this->faker->unique()->safeEmail,
-            'email' => $this->faker->phoneNumber,
-            'website' => $this->faker->address,
-            'city' => $this->faker->address,
-            'address' => $this->faker->address,
-            'image' => $this->faker->address,
-            'active' => $this->faker->address,
-
+            'ClientName' => fake()->name(),
+            'phone' => fake()->phoneNumber(),
+            'email' => fake()->safeEmail(),
+            'website' => fake()->url(),
+            'city_id' => fake()->numberBetween(1,20),
+            'address' => fake()->address(),
+            'image' => fake()->imageUrl(640, 480),
+            'active' => fake()->numberBetween(0, 1),
 
         ];
     }
