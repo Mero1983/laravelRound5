@@ -13,14 +13,7 @@ class ClientOrderSeeder extends Seeder
 {
     public function run()
     {
-        $clients = Client::factory()->create();
-        $orders = Order::factory()->create();
-
-        // Attach orders to clients with random selection
-        foreach ($clients as $client) {
-            $client->orders()->attach($orders->random(rand(1, 3))->pluck('id'));
-        }
-       
+      
     }
     
 }

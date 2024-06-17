@@ -4,18 +4,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ContactController;
 
 
-
-/*Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 Route::get('marwa/{id}',function($id){
     return'welcome to my website'.$id;
 });
-Route::get('marwa/{id?}'),function($id=0);
-    return'welcome to my website'.$id;
-where (['id'<='[0-9]'+]; 
+
+
+// Route::get('marwa/{id?})',function($id=0){
+//     return'welcome to my website'.$id;
+// where (['id'<='[0-9]'+]; 
 //regular expression  when i need to specific number 
 Route::get('marwa/{id?}',function($id =0){
     return'welcome to my website'.$id;
@@ -33,7 +35,9 @@ Route::prefix('cars')->group(function(){
     Route::get('mercedes',function(){
         return 'category is Mercedes';
 });
-});*/
+});
+
+
 //Route::get('test20',[MyController::class,'my_data']);
 //Route::get('test20',function(){
  //   return view('test');
@@ -59,9 +63,9 @@ Route::prefix('cars')->group(function(){
     //return 'The required is not found';
    // return redirect('/');
 //});
-Route::get('/', function () {
-    return view('stacked');
-});
+// Route::get('/', function () {
+//     return view('stacked');
+// });
 
 //Route::post('form1',[MyController::class,'getData']);
 //Route::view('form1','form1');
@@ -84,7 +88,7 @@ Route::put('updateStudent/{id}', [StudentController::class, 'update'])->name('up
 
 Route::post('insertClient',[ClientController::class,'store'])->name('insertClient');
 Route::get('addClient',[ClientController::class,'create'])->name('addClient');
-Route::get('Clients',[ClientController::class,'index'])->name('Clients');
+Route::get('Clients',[ClientController::class,'index'])->middleware('verified')->name('Clients');
 Route::get('editClient/{id}',[ClientController::class,'edit'])->name('editClient');
 Route::put('updateClient/{id}',[ClientController::class,'update'])->name('updateClient');
 Route::get('showClient/{id}',[ClientController::class,'show'])->name('showClient');
@@ -93,3 +97,12 @@ Route::get('trashClient',[ClientController::class,'trash'])->name('trashClient')
 Route::get('restoreClient/{id}',[ClientController::class,'restore'])->name('restoreClient');
 Route::delete('forceDelete',[ClientController::class,'forceDelete'])->name('forceDelete');
 
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('mySession',[MyController::class,'myVal'])->name('myVal');
+Route::get('restoreSession',[MyController::class,'restoreVal'])->name('restoreVal');
+Route::get('sendClientMail',[MyController::class,'sendClientMail'])->name('sendClientMail');
+Route::get('contact_us', [ContactController::class, 'showContactForm'])->name('contact.show');
+Route::post('contact_us', [ContactController::class, 'submitContactForm'])->name('contact.submit');

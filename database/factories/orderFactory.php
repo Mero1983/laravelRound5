@@ -17,12 +17,10 @@ class orderFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_number' => fake()->order(),
-            'status' => fake()->order(),
-            'total_number' => fake()->order(),
-
-
-            
+            'order_number' =>  $this->faker->numberBetween(1, 50),
+            'total_amount' => $this->faker->numberBetween(1, 50),
+            'status' => $this->faker->randomElement(['pending', 'processing', 'shipped', 'completed', 'cancelled']),
+    
         ];
     }
 }

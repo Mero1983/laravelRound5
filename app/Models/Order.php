@@ -14,10 +14,10 @@ class Order extends Model
         'order_number',
         'total_amount',
         'status',
-        'client_id',
+        
     ];
        
-    public function client(){
+    public function clients(){
         return $this->belongsToMany(Client::class,'client_order');
         }
     }        
