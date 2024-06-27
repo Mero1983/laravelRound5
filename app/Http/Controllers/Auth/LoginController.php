@@ -46,15 +46,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
-    public function username()
+    public function name()
     {
-        return 'username';
+        return 'name';
         
     }
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            $this->name() => 'required|string',
             'password' => 'required|string',
         ]);
     }
@@ -66,8 +66,14 @@ class LoginController extends Controller
     }
     protected function credentials(Request $request)
     {
+        // if(is_numeric($request->name)){
+        //     return ['mobile'=>$request->email, 'password'=>$request->password];
+        //     }elseif(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
+        //     return ['email'=>$request->email, 'password'=>$request->password];
+        //     }
+            
         return [
-            $this->username() => $request->get($this->username()),
+            $this->name() => $request->get($this->name()),
             'password' => $request->get('password'),
         ];
     }
@@ -83,7 +89,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            $this->name() => [trans('auth.failed')],
         ]);
     }
 }

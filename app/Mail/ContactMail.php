@@ -15,7 +15,7 @@ class ContactMail extends Mailable
     use Queueable, SerializesModels;
 
   
-    public $contactData;
+    //public $contactData;
 
     /**
      * Create a new message instance.
@@ -23,37 +23,30 @@ class ContactMail extends Mailable
      * @return void
      */  /**
      */
-    public function __construct($contactData)
+    public function __construct(public array $contactData)
     {
-        $this->contactData = $contactData;
+       // 
+    }
 
-    }
-    public function build()
-    {
-        return $this->from($this->contactData['email'])
-                    ->subject('Contact Form Submission')
-                    ->view('emails.contact')
-                    ->with('contactData', $this->contactData);
-    }
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Mail',
+            from: new Address('marwa@yahoo.com','congratulation'),
+            subject: '2M Test Email Template',
         );
     }
-
-    /**
-     * Get the message content definition.
-     */
-    
-    
      public function content(): Content
     {
         return new Content(
-            view: 'emails.contact',
+            markdown: 'emails.contact',
+        
+                with:[
+                    'contactData'=>$this->contactData,
+    
+                ]
         );
         
     }

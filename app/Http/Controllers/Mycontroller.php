@@ -3,64 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use App\Mail\ContactClient;
+use App\Mail\DemoMail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Client;
-use Mail;
-
-class MyController extends Controller{
-
-
-// public function generalMail(){
-
-// $data['theMessage']='message data is here';
-
-// Mail::to($data['email'])->send(new DemoMail($data));
+use App\Mail\ContactClient;
+use App\Models\User;
+use App\Mail\ContactMail;
 
 
+class MyController extends Controller
+{
+    public function my_data(){
+        return view('test');
+    }
 
-// return"mail sent !";
-// }
+    public function receiveData(Request $request){
+        $fname = $request->fname;
+        $lname = $request->lname;
+        return view('test1', compact('fname', 'lname'));
+    }
 
+    public function generalMail(){
+        $data = Client::findOrFail(1)->toArray();
+        $data['theMessage'] = 'message data is here';
+        Mail::to($data['email'])->send( 
+            new ContactClient($data)
+        );
+        return "mail sent!";
+    }
 
+    public function myVal(){
+        // session()->put('test','My first session');
+        session()->flash('test1','My first session');
+        return 'Session Created';
+    }
 
-public function myVal(){
-// session()->put('test','My first session');
-session()->flash('test1','My first session');
-return  'Session created';
-}
+    public function restoreVal(){
+        return 'My Session value is: ' . session('test1');
+    }
 
-public function restoreVal(){
-  return  'My Session Value is:' .session('test1');
-  
+    public function deleteVal(){
+        // session()->forget('test');
+        session()->flush();
+        return 'Session removed';
+    }
+
+    public function sendClientMail(){
+        $data = Client::findOrFail(1)->toArray();
+        $data['theMessage'] = 'My message';
+        Mail::to($data['email'])->send( 
+            new ContactClient($data)
+        );
+        return "mail sent!";
+    }
+    public function sendContactMail(){
+      $contactData = User::findOrFail(1)->toArray();
+      $contactData['theMessage'] = 'My message';
+      Mail::to($contactData['email'])->send( 
+          new ContactMail($contactData)
+          
+      );
+      return "mail sent!";
+      
   }
-
-  public function deleteVal(){
-    return  'Session removed';
-
-  }
-
-public function sendClientMail(){
-
-$data= Client::findOrFail(1)->toArray();
-$data['The Message']='My Message';
-Mail::to ($data['email'])->send(
-new ContactClient($data)
-);
-return 'mail sent';
-
-}
-
-// function getdata(Request $req){
-
-//     return $req->input();
-//     }
-
-  
-
-
-// public function display($first_name,$last_name){
-//    return view('login')-> with ('first_name'.$first_name,'last_name'.$last_name);
-
-// }
 }

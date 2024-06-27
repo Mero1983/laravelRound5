@@ -7,6 +7,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Log;
 use App\Mail\ContactMail;
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 
 
 class ContactController extends Controller
@@ -16,6 +18,7 @@ class ContactController extends Controller
      *
      * @return \Illuminate\View\View
      */
+
     public function showContactForm()
     {
         return view('contact_us');
@@ -38,6 +41,7 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string',
         ]);
+        
 
         // Process the form data (e.g., send email, save to database, etc.)
         $contactData = $request->only('name', 'email', 'message');
@@ -51,5 +55,8 @@ class ContactController extends Controller
         Log::info('Contact form submitted', $contactData);
 
         // Redirect with success message
-        return redirect()->route('contact.show')->with('success', 'Thank you for your message. We will get back to you soon.');
-    }}
+        return 'success Thank you for your message. We will get back to you soon';
+    
+  
+    }
+}

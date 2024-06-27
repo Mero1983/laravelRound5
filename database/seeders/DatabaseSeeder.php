@@ -18,10 +18,13 @@ class DatabaseSeeder extends Seeder
             // Seed the database with clients and orders
             $this->call(ClientSeeder::class);
             $this->call(OrderSeeder::class);
-            
+            $this->call(UserSeeder::class);
+
             // Create clients and orders using factories
             $clients = Client::factory(20)->create();
             $orders = Order::factory(20)->create();
+            $users = User::factory(20)->create();
+
             
             // Attach random orders to each client
             $clients->each(function ($client) use ($orders) {
